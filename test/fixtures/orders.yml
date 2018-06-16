@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  csv_id: 1
+  csv_order_num: 1
+  csv_created_at: 2018-06-16 13:32:12
+  csv_updated_at: 2018-06-16 13:32:12
+  csv_user_id: 1
+  user: one
+
+two:
+  csv_id: 1
+  csv_order_num: 1
+  csv_created_at: 2018-06-16 13:32:12
+  csv_updated_at: 2018-06-16 13:32:12
+  csv_user_id: 1
+  user: two

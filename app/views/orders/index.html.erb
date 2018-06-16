@@ -1,0 +1,84 @@
+<!-- <h1>Orders#index</h1>
+<p>Find me in app/views/orders/index.html.erb</p> -->
+<%= flash[:notice] %>
+<style>
+
+    thead tr {
+      width: 100%;
+      display: block;
+      text-align: center;
+      background: black;
+      color: white;
+    }
+    th,td{
+      /*width: 25%;*/
+      display: inline-block;
+      padding: 0px;
+      outline: 1px solid black;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+    }
+    thead tr th{
+      outline: 1px solid white;
+    }
+    th:nth-of-type(1),td:nth-of-type(1){
+    	width: 10%;
+    }
+    th:nth-of-type(2),td:nth-of-type(2){
+    	width: 13%;
+    }
+    th:nth-of-type(3),td:nth-of-type(3){
+    	width: 13%;
+    }
+    th:nth-of-type(4),td:nth-of-type(4){
+    	width: 25%;
+    }
+    th:nth-of-type(5),td:nth-of-type(5){
+    	width: 25%;
+    }
+    th:nth-of-type(6),td:nth-of-type(6){
+    	width: 14%;
+    }
+</style>
+
+<%= link_to "Return To Home Page", home_index_path %>
+
+<br/>
+<br/>
+<br/>
+
+<div>
+	<br/>
+	<br/>
+  <span style="font-size: 22px; font-weight: bold; font-style: italic;">Import Order Data</span>
+  <p>Order data must be in a properly formatted .csv file! Choose File first, then select "Import CSV" Button. </p>
+  <%= form_tag import_orders_path, multipart: true do %>
+   <%= file_field_tag :file %>
+   <%= submit_tag "Import CSV" %>
+  <% end %>
+  <br/>
+  <br/>
+</div>
+
+
+<span style="font-size: 22px; font-weight: bold; font-style: italic;">Current Orders</span>
+<table width="1000">
+  <thead style="display: block;">
+    <tr>
+    	<th>csv_id</th><th>csv_order_num</th><th>csv_id of User</th><th>csv_created_at</th><th>csv_updated_at</th><th>Is User In DB?</th></tr>
+  </thead>
+  <tbody style="">
+  	<% @orders.each do |order| %>
+  	  <tr>
+  	  	<td> <%= order.csv_id.to_s %> </td>
+  	  	<td> <%= order.csv_order_num.to_s %> </td>
+  	  	<td> <%= order.csv_user_id.to_s %> </td>
+  	  	<td> <%= order.csv_created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p %Z") %> </td>
+  	  	<td> <%= order.csv_updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p %Z") %> </td>
+  	  	<td> <%= order.user ? "YES!" : "User Not In DB" %> </td>
+  	  </tr>
+  	<% end %>
+  </tbody>
+
+</table>

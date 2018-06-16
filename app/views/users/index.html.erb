@@ -1,0 +1,79 @@
+<!-- <h1>Users#index</h1>
+<p>Find me in app/views/users/index.html.erb</p> -->
+<%= flash[:notice] %>
+
+<style>
+    thead tr {
+      width: 100%;
+      display: block;
+      text-align: center;
+      background: black;
+      color: white;
+    }
+    th,td{
+      /*width: 25%;*/
+      display: inline-block;
+      padding: 0px;
+      outline: 1px solid black;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+    }
+    thead tr th{
+      outline: 1px solid white;
+    }
+    th:nth-of-type(1),td:nth-of-type(1){
+    	width: 10%;
+    }
+    th:nth-of-type(2),td:nth-of-type(2){
+    	width: 40%;
+    }
+    th:nth-of-type(3),td:nth-of-type(3){
+    	width: 40%;
+    }
+    th:nth-of-type(4),td:nth-of-type(4){
+    	width: 10%;
+    }
+</style>
+
+
+<%= link_to "Return To Home Page", home_index_path %>
+<br/>
+<br/>
+<br/>
+<div>
+	<br/>
+	<br/>
+  <span style="font-size: 22px; font-weight: bold; font-style: italic;">Import User Data</span>
+  <p>User data must be in a properly formatted .csv file! Choose File first, then select "Import CSV" Button. </p>
+  <%= form_tag import_users_path, multipart: true do %>
+   <%= file_field_tag :file %>
+   <%= submit_tag "Import CSV" %>
+  <% end %>
+  <br/>
+  <br/>
+</div>
+
+
+<span style="font-size: 22px; font-weight: bold; font-style: italic;">Current Users</span>
+<table width="1000">
+  <thead style="display: block;">
+    <tr>
+    	<th>csv_id</th><th>csv_created_at</th><th>csv_updated_at</th><th># of Orders</th></tr>
+  </thead>
+  <tbody style="">
+  	<% @users.each do |user| %>
+  	  <tr>
+  	  	<td> <%= user.csv_id.to_s %> </td>
+  	  	<td> <%= user.csv_created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p %Z") %> </td>
+  	  	<td> <%= user.csv_updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%Y at %I:%M%p %Z") %> </td>
+  	  	<td> <%= user.orders.length %> </td>
+  	  </tr>
+  	<% end %>
+  </tbody>
+
+</table>
+
+
+
+
