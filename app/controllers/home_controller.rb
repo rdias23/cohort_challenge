@@ -24,7 +24,10 @@ class HomeController < ApplicationController
           cohort_user_orders = get_user_orders_for_week((index + 1),cohort_users.ids)
 
           uniq_users_who_ordered_num = cohort_user_orders.map(&:csv_user_id).uniq.length
-          first_cohort_user_orders_num = cohort_user_orders.select { |order| order.csv_order_num == 1 }.length
+
+          #it should be enough to just select all the cohort_user_orders that have a csv_order_num equal to '1', but in the 8th cohort back,
+          #there was a discrepancy... I think there may be a mistake in the input data!
+          first_cohort_user_orders_num = cohort_user_orders.select { |order| order.csv_order_num == 1 }.map(&:csv_user_id).uniq.length
 
           cohort_info_hsh[:week_blocks][k][:num_users_ordered] = uniq_users_who_ordered_num
           cohort_info_hsh[:week_blocks][k][:num_users_ordered_first_time] = first_cohort_user_orders_num
