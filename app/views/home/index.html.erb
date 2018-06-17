@@ -1,4 +1,80 @@
-<!-- <h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p> -->
+
+<%= flash[:notice] %>
+<style>
+
+    thead tr {
+      width: 100%;
+      display: block;
+      text-align: left;
+      background: black;
+      color: white;
+    }
+    th,td{
+      /*width: 25%;*/
+      display: inline-block;
+      padding: 0px;
+      outline: 1px solid black;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+      height: 40px;
+    }
+    thead tr th{
+      outline: 1px solid white;
+    }
+    th,td{
+    	width: 240px;
+    }
+    select{
+      width: 90px;
+      height: 24px;
+      display: inline-block;
+    }
+    input{
+    	box-sizing: content-box;
+    	width: 90px;
+    }
+</style>
+
+<br/>
+<br/>
+<br/>
+
 <%= link_to "Import Users Form & Current Users List", users_index_path %><br/>
-<%= link_to "Import Order Form & Current Orders List", orders_index_path %>
+<%= link_to "Import Orders Form & Current Orders List", orders_index_path %>
+
+<br/>
+<br/>
+<span style="font-size: 22px; color: green;"> How many Cohorts would you like to see? (select number from dropdown menu, and then select the "Submit" button.) </span>
+
+
+<%= form_tag root_path, id: "cohort_update_form" do %>
+    <%= select_tag 'cohort_weeks_requested', options_for_select(@week_options_for_select, @weeks_back_requested ? @weeks_back_requested : 8)  %>
+    <%= submit_tag nil, class: "form_submit" %>
+<%end %>
+
+<br/>
+
+<span style="font-size: 22px; font-weight: bold; font-style: italic;">Cohort Information</span>
+<table width="<%= 490 + (@weeks_back_requested * 240) %>">
+  <thead style="display: block;">
+    <tr>
+    	<th>Cohort</th><th>Users</th><% @weeks_back_requested.times do |n| %><th><%= (0 + (n * 7)).to_s + "-" + ((n * 7) + 7).to_s + " days" %></th><% end %>
+  </thead>
+  <tbody style="">
+  	<% @cohort_info_hsh_arr.each do |ch_hsh| %>
+  	  <tr>
+  	  	<td> <%= ch_hsh[:name] %> </td>
+  	  	<td> <%= ch_hsh[:user_count].to_s + " users" %> </td>
+  	  	<% @weeks_back_requested.times do |n| %>
+  	  	  <td>
+  	  	  	  <%= ch_hsh[:week_blocks].to_a[-(n + 1)] ? ch_hsh[:week_blocks].to_a[-(n + 1)].last[:percent_users_ordered].to_s + "% orderers (" + ch_hsh[:week_blocks].to_a[-(n + 1)].last[:num_users_ordered].to_s + ")" : "           " %>
+  	  	  	<br/>
+  	  	  	  <%= ch_hsh[:week_blocks].to_a[-(n + 1)] ? ch_hsh[:week_blocks].to_a[-(n + 1)].last[:percent_users_ordered_first_time].to_s + "% 1st time (" + ch_hsh[:week_blocks].to_a[-(n + 1)].last[:num_users_ordered_first_time].to_s + ")" : "           " %>
+  	  	  </td>
+  	  	<% end %>
+  	  </tr>
+  	<% end %>
+  </tbody>
+
+</table>
