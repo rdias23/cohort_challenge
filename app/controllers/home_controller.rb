@@ -62,7 +62,7 @@ class HomeController < ApplicationController
   	first_cohort_second = self.yield_limit_second_for_first_cohort_inclusion.to_f - (self.yield_seconds_in_a_week * week_num.to_f)
   	last_cohort_second = self.yield_limit_second_for_first_cohort_inclusion.to_f - (self.yield_seconds_in_a_week * (week_num.to_f - 1))
 
-  	users = User.where(:csv_created_at => Time.at(first_cohort_second)..Time.at(last_cohort_second))
+  	users = User.where(:csv_created_at => Time.at(first_cohort_second)...Time.at(last_cohort_second))
 
   	return users
   end
@@ -71,7 +71,7 @@ class HomeController < ApplicationController
   	first_cohort_second = self.yield_limit_second_for_first_cohort_inclusion.to_f - (self.yield_seconds_in_a_week * week_num.to_f)
   	last_cohort_second = self.yield_limit_second_for_first_cohort_inclusion.to_f - (self.yield_seconds_in_a_week * (week_num.to_f - 1))
 
-  	orders = Order.joins(:user).where("users.id" => user_id_arr).where(:csv_created_at => Time.at(first_cohort_second)..Time.at(last_cohort_second))
+  	orders = Order.joins(:user).where("users.id" => user_id_arr).where(:csv_created_at => Time.at(first_cohort_second)...Time.at(last_cohort_second))
   	return orders
   end
 
