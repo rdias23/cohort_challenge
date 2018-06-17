@@ -99,7 +99,13 @@ class HomeController < ApplicationController
   	# as the end point of our most recent week-long group, or cohort... Cohorts are 1 week blocks,
   	# counting back from there!
   	limit_second_for_first_cohort_inclusion = self.yield_limit_second_for_first_cohort_inclusion
-  	max_weeks_back_needed = ((limit_second_for_first_cohort_inclusion - User.all.order("csv_created_at DESC").last.csv_created_at.to_i) / 60.0 / 60.0 / 24.0 / 7.0).ceil
+
+  	if User.all.length > 0
+  	  max_weeks_back_needed = ((limit_second_for_first_cohort_inclusion - (User.all.order("csv_created_at DESC").last.csv_created_at.to_i)) / 60.0 / 60.0 / 24.0 / 7.0).ceil
+    else
+    	max_weeks_back_needed = 0
+    end
+
   	return max_weeks_back_needed
   end
 
