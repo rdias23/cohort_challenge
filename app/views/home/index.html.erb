@@ -58,22 +58,23 @@
 <span style="font-size: 22px; font-weight: bold; font-style: italic;">Cohort Information</span>
 <table width="<%= 490 + (@weeks_back_requested * 240) %>">
   <thead style="display: block;">
-    <tr>
-    	<th>Cohort</th><th>Users</th><% @weeks_back_requested.times do |n| %><th><%= (0 + (n * 7)).to_s + "-" + ((n * 7) + 7).to_s + " days" %></th><% end %>
+  	 <!-- The below is all compressed because I am using display: inline block, which is white space aware -->
+    <tr><th>Cohort</th><th>Users</th><% @weeks_back_requested.times do |n| %><th><%= (n * 7).to_s + "-" + ((n * 7) + 7).to_s + " days" %></th><% end %></tr>
   </thead>
   <tbody style="">
   	<% @cohort_info_hsh_arr.each do |ch_hsh| %>
-  	  <tr>
-  	  	<td> <%= ch_hsh[:name] %> </td>
-  	  	<td> <%= ch_hsh[:user_count].to_s + " users" %> </td>
-  	  	<% @weeks_back_requested.times do |n| %>
-  	  	  <td>
-  	  	  	  <%= ch_hsh[:week_blocks].to_a[-(n + 1)] ? ch_hsh[:week_blocks].to_a[-(n + 1)].last[:percent_users_ordered].to_s + "% orderers (" + ch_hsh[:week_blocks].to_a[-(n + 1)].last[:num_users_ordered].to_s + ")" : "           " %>
-  	  	  	<br/>
-  	  	  	  <%= ch_hsh[:week_blocks].to_a[-(n + 1)] ? ch_hsh[:week_blocks].to_a[-(n + 1)].last[:percent_users_ordered_first_time].to_s + "% 1st time (" + ch_hsh[:week_blocks].to_a[-(n + 1)].last[:num_users_ordered_first_time].to_s + ")" : "           " %>
-  	  	  </td>
-  	  	<% end %>
-  	  </tr>
+  	   <!-- The below section looks oddd, with all white space commented out because I am using display: inline block, which is white space aware -->
+  	  <tr><!--
+  	    --><td><%= ch_hsh[:name] %></td><!--
+        --><td><%= ch_hsh[:user_count].to_s + " users" %></td><!--
+           --><% @weeks_back_requested.times do |n| %><!--
+              --><td>
+           	        <%= ch_hsh[:week_blocks].to_a[-(n + 1)] ? ch_hsh[:week_blocks].to_a[-(n + 1)].last[:percent_users_ordered].to_s + "% orderers (" + ch_hsh[:week_blocks].to_a[-(n + 1)].last[:num_users_ordered].to_s + ")" : "           " %>
+           	      <br/>
+           	        <%= ch_hsh[:week_blocks].to_a[-(n + 1)] ? ch_hsh[:week_blocks].to_a[-(n + 1)].last[:percent_users_ordered_first_time].to_s + "% 1st time (" + ch_hsh[:week_blocks].to_a[-(n + 1)].last[:num_users_ordered_first_time].to_s + ")" : "           " %>
+                </td><!--
+           --><% end %><!--
+   --></tr>
   	<% end %>
   </tbody>
 
